@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>RK Health - Capstone Technical Report</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        @page {
+            size: A4;
+            margin: 20mm;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #1e293b;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+        h1, h2, h3, h4 {
+            color: #0f172a;
+            page-break-after: avoid;
+        }
+        h1 {
+            font-size: 24pt;
+            border-bottom: 2px solid #3b82f6;
+            padding-bottom: 6px;
+            margin-top: 30pt;
+        }
+        h2 {
+            font-size: 18pt;
+            margin-top: 20pt;
+            border-bottom: 1px solid #cbd5e1;
+            padding-bottom: 4px;
+        }
+        p {
+            font-size: 11pt;
+            text-align: justify;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15pt 0;
+            page-break-inside: avoid;
+        }
+        th, td {
+            border: 1px solid #cbd5e1;
+            padding: 8pt;
+            font-size: 10pt;
+            text-align: left;
+        }
+        th {
+            background-color: #f1f5f9;
+            font-weight: 600;
+        }
+        .cover-page {
+            height: 90vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            page-break-after: always;
+            text-align: center;
+            padding-top: 10vh;
+        }
+        .cover-title {
+            font-size: 28pt;
+            font-weight: 700;
+            color: #1e3a8a;
+            margin-bottom: 10pt;
+        }
+        .cover-subtitle {
+            font-size: 16pt;
+            color: #475569;
+            margin-bottom: 40pt;
+        }
+        .cover-metadata {
+            margin-top: auto;
+            font-size: 12pt;
+            color: #334155;
+            border-top: 2px solid #e2e8f0;
+            padding-top: 20pt;
+        }
+        .page-break {
+            page-break-after: always;
+        }
+        .image-container {
+            text-align: center;
+            margin: 20pt 0;
+            page-break-inside: avoid;
+        }
+        .image-container img {
+            max-width: 90%;
+            height: auto;
+            border: 1px solid #cbd5e1;
+            border-radius: 4px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+        }
+        .image-caption {
+            font-size: 9.5pt;
+            color: #64748b;
+            margin-top: 6pt;
+            font-style: italic;
+        }
+        code, pre {
+            font-family: 'Courier New', monospace;
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 4px;
+            font-size: 9.5pt;
+        }
+        pre {
+            padding: 10pt;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            page-break-inside: avoid;
+        }
+        .alert-box {
+            background-color: #eff6ff;
+            border-left: 4px solid #3b82f6;
+            padding: 10pt;
+            margin: 15pt 0;
+            border-radius: 0 4px 4px 0;
+            page-break-inside: avoid;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- COVER PAGE -->
+    <div class="cover-page">
+        <div>
+            <div class="cover-title">RK HEALTH</div>
+            <div class="cover-subtitle">AI Smart Patient Appointment & Medication Reminder System</div>
+            <p style="text-align: center; font-size: 13pt; color: #64748b;">A Cloud-Integrated Clinical Portal for Patient Adherence</p>
+        </div>
+        <div class="cover-metadata">
+            <p style="text-align: center; font-weight: 600;">AI Specialist Track Capstone Project Report</p>
+            <p style="text-align: center;"><strong>Submitted By:</strong> Matseti Kedhara Sri Ramakrishna (Team Lead)</p>
+            <p style="text-align: center;"><strong>Teammates:</strong> Ajay Vardhan Killi, Saragadam Neeraja, David Mahesh Yarlagadda, Korada Sudeep, Pradeep Kirlampalli</p>
+            <p style="text-align: center;"><strong>Institution:</strong> SmartBridge SkillWallet Academy</p>
+            <p style="text-align: center;"><strong>Date:</strong> June 2026</p>
+        </div>
+    </div>
+
+    <!-- PRELIMINARY PAGES -->
+    <h1>Abstract</h1>
+    <p>
+        RK Health is a full-stack digital patient dashboard designed to resolve key healthcare delivery obstacles: medication non-adherence, missing doctor consultation updates, and clinical document interpretation complexities. By connecting a local SQLite relational engine with a Google Sheets cloud datastore, Google Calendar APIs, Twilio SMS REST client, and OpenAI chat completions, RK Health automates compliance workflows and translates dense medical documents into clear, patient-friendly plain-English reports.
+    </p>
+
+    <h1>System Architecture & Stack</h1>
+    <p>
+        The application is structured around a lightweight Flask (Python) service orchestrating communications between local SQLite databases and cloud integrations. The frontend uses vanilla CSS and JavaScript with Chart.js to display patient adherence logs.
+    </p>
+    
+    <div class="image-container">
+        <!-- System Architecture Vector Representation -->
+        <svg width="600" height="200" style="background:#f8fafc; border:1px dashed #cbd5e1; border-radius:4px;">
+            <rect x="20" y="70" width="100" height="60" rx="5" fill="#eff6ff" stroke="#3b82f6" stroke-width="2"/>
+            <text x="70" y="105" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="bold" fill="#1e3a8a">Web UI Portal</text>
+            
+            <path d="M 120 100 L 190 100" stroke="#475569" stroke-width="2" marker-end="url(#arrow)"/>
+            
+            <rect x="190" y="70" width="120" height="60" rx="5" fill="#f0fdf4" stroke="#22c55e" stroke-width="2"/>
+            <text x="250" y="105" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="bold" fill="#14532d">Flask Backend</text>
+            
+            <path d="M 310 100 L 380 70" stroke="#475569" stroke-width="2"/>
+            <path d="M 310 100 L 380 100" stroke="#475569" stroke-width="2"/>
+            <path d="M 310 100 L 380 130" stroke="#475569" stroke-width="2"/>
+            
+            <rect x="380" y="45" width="160" height="35" rx="3" fill="#fff7ed" stroke="#f97316" stroke-width="1.5"/>
+            <text x="460" y="67" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#7c2d12">Google Sheets & Calendar</text>
+            
+            <rect x="380" y="83" width="160" height="35" rx="3" fill="#fff7ed" stroke="#f97316" stroke-width="1.5"/>
+            <text x="460" y="105" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#7c2d12">Twilio SMS Client</text>
+            
+            <rect x="380" y="121" width="160" height="35" rx="3" fill="#fff7ed" stroke="#f97316" stroke-width="1.5"/>
+            <text x="460" y="143" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#7c2d12">OpenAI Summary API</text>
+            
+            <defs>
+                <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                    <path d="M 0 0 L 10 5 L 0 10 z" fill="#475569" />
+                </marker>
+            </defs>
+        </svg>
+        <div class="image-caption">Figure 1.1: Functional component interactions layout.</div>
+    </div>
+
+    <div class="page-break"></div>
+
+    <!-- EXPLORING THE WEBSITE PAGES -->
+    <h1>Exploring the Web Portal</h1>
+    
+    <h2>1. Dashboard Overview</h2>
+    <p>
+        The dashboard is the main control center for the patient. It shows count metrics for appointments, medications, and health logs, followed by compliance stats and appointment lists.
+    </p>
+    <div class="image-container">
+        <img src="images/dashboard.png" alt="Dashboard Screenshot" onerror="this.src='https://placehold.co/600x350?text=Dashboard+Screenshot+Placeholder'">
+        <div class="image-caption">Figure 2.1: Main patient dashboard with analytical widgets.</div>
+    </div>
+
+    <h2>2. Appointments Scheduling Page</h2>
+    <p>
+        Allows users to input doctor details, scheduled dates, and symptoms notes. Clicking save triggers local SQLite db insertion and initiates the Google Sheet/Calendar webhook sync.
+    </p>
+    <div class="image-container">
+        <img src="images/appointment_form.png" alt="Appointment Booking Form" onerror="this.src='https://placehold.co/600x350?text=Appointment+Booking+Form+Placeholder'">
+        <div class="image-caption">Figure 2.2: Booking form linking Sheet database and Calendar event details.</div>
+    </div>
+
+    <div class="page-break"></div>
+
+    <h2>3. Medications & Reminders Page</h2>
+    <p>
+        Tracks medicine regimens. Patients can click the "Send SMS" test trigger to verify Twilio's dispatch alert is correctly routed to their mobile phones.
+    </p>
+    <div class="image-container">
+        <img src="images/medications_table.png" alt="Medication Manager Tab" onerror="this.src='https://placehold.co/600x350?text=Medications+Table+Placeholder'">
+        <div class="image-caption">Figure 2.3: Medication adherence list and SMS reminder triggers.</div>
+    </div>
+
+    <h2>4. AI Diagnostic Summarization Report</h2>
+    <p>
+        Compiles doctor notes and processes them through an LLM to generate clear medical translations, instructions, and preventative tips.
+    </p>
+    <div class="image-container">
+        <img src="images/ai_report.png" alt="AI Generated Health Advice" onerror="this.src='https://placehold.co/600x350?text=AI+Health+Report+Placeholder'">
+        <div class="image-caption">Figure 2.4: Patient-friendly medical explanation card generated by AI.</div>
+    </div>
+
+    <div class="page-break"></div>
+
+    <h2>5. Printable Report Preview</h2>
+    <p>
+        Clicking the print button opens Chrome's printer overlay. The custom CSS layout formats tables and reports for paper delivery.
+    </p>
+    <div class="image-container">
+        <img src="images/print_preview.png" alt="Print Preview Overlay" onerror="this.src='https://placehold.co/600x350?text=Print+Preview+Dialog+Placeholder'">
+        <div class="image-caption">Figure 2.5: Printable view optimized for clinical consults.</div>
+    </div>
+
+    <!-- DEVELOPMENT IMPLEMENTATION -->
+    <h1>Core Python App Code (`backend/app.py`)</h1>
+    <pre>
+import os
+import sys
+
+# Append parent directory to system path before standard module imports
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+from flask import Flask, send_from_directory
+from flask_cors import CORS
+from backend.config import Config
+from backend.database import init_db
+from backend.routes.auth import auth_bp
+from backend.routes.appointments import appointments_bp
+from backend.routes.medications import medications_bp
+from backend.routes.notes import notes_bp
+from backend.routes.summary import summary_bp
+
+frontend_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'frontend'))
+app = Flask(__name__, static_folder=frontend_dir, static_url_path='')
+CORS(app, supports_credentials=True)
+app.config.from_object(Config)
+
+# Register routes
+app.register_blueprint(auth_bp)
+app.register_blueprint(appointments_bp)
+app.register_blueprint(medications_bp)
+app.register_blueprint(notes_bp)
+app.register_blueprint(summary_bp)
+
+@app.route('/')
+def serve_index():
+    return send_from_directory(frontend_dir, 'login.html')
+
+if __name__ == '__main__':
+    init_db()
+    port = int(os.getenv('PORT', 5000))
+    app.run(host='0.0.0.0', port=port, debug=True)
+    </pre>
+
+    <h1>Conclusion</h1>
+    <p>
+        RK Health serves as a complete demonstration of how full-stack design patterns and Generative AI can be applied to solve real-world healthcare compliance challenges. By containerizing the deployment with Docker and hosting on Render's cloud servers, the portal is secure, reliable, and easily accessible.
+    </p>
+
+</body>
+</html>
